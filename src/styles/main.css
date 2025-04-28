@@ -1,0 +1,26 @@
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.main__content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgb(219, 219, 219);
+    flex: 1;
+}
+
+.main__header-wrapper{
+    width: 100%;
+    height: 100px;
+}
+
+.main__nav-wrapper{
+    width: 100%;
+    height: 100px;
+}
+
