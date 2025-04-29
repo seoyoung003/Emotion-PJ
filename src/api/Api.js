@@ -2,7 +2,8 @@
 
 export const Api = async (query) => {
 
-    const apiKey = 'AIzaSyAE2D-AD-Qwh6kX22JNf_ltF9Ujmub0syA';
+
+    const apiKey = process.env.GOOGLE_API_KEY;
 
 
 const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=${apiKey}&maxResults=5`;

@@ -4,6 +4,8 @@ export const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
  
   const handleSubmit = async() => {
@@ -16,12 +18,13 @@ export const PostForm = () => {
         body: JSON.stringify({ title, content, isChecked}),
         credentials: "include",
       });
-    } catch{
-
+      const data = await res.json();
+    } catch (error){
+        console.log("게시물 전송 에러", error);
       }
      
 
-      const data = await res.json();
+      
     
     
 
@@ -30,6 +33,17 @@ export const PostForm = () => {
   const handleCheck = () => {
     setIsChecked(!isChecked);
   }
+  const handleFileChange = (e) => {
+    const files = Array;
+    if (files) {
+      setSelectedFiles(files);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(files);
+    }
+  };
 
   return (
     <div>
@@ -48,10 +62,28 @@ export const PostForm = () => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력하세요..."
         />
-        <label><input type="checkbox" checked={isChecked} onChange={handleCheck}/>익명</label>
-        <input type="file" accept="image/*" id="fileInput" onchange="handleFileChange(event)" capture="camera"></input>
-        <div id="previewContainer"></div>
-  
+ 
+      <label>
+        <input type="checkbox" checked={isChecked} onChange={handleCheck} />
+        익명
+      </label>
+
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileChange}
+        capture="environment" 
+      />
+
+
+      <div id="previewContainer">
+        {previewUrl && 
+          previewUrl.map((url, index) => (
+            <img src={url} key={index} alt="미리보기" />
+          ))
+        }
+      </div>
         <button type="submit">저장</button>
       </form>
      

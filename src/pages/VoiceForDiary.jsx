@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { sendText } from '../service/sendText';
 import { DisplayVideo } from './DisplayVideo';
-import { sendPost } from '../service/sendPost';
+import { sendDiary } from '../service/sendDiary';
 
 export const VoiceForDiary = () => {
     const recognitionRef = useRef(null);
@@ -11,7 +11,7 @@ export const VoiceForDiary = () => {
     const formattedDate = today.toISOString().split('T')[0];
     const [fullText, setFullText] = useState(""); 
 
-    const postData = {
+    const diaryData = {
         title: title,
         content: fullText,
       };
@@ -74,7 +74,7 @@ export const VoiceForDiary = () => {
         const emotion = await sendText(fullText);
 
         // 게시글 저장 요청
-        await sendPost(postData);
+        await sendDiary(diaryData);
 
         // 감정 분석 결과 설정
         setAnalysisResult(emotion);
